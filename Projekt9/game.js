@@ -6,7 +6,7 @@ const gameSummary = {
     games: 0,
     wins: 0,
     losses: 0,
-    draws: 0
+    draws: 0,
 }
 
 
@@ -58,30 +58,14 @@ const chooseWinner = (playerChoice, aiChoice) => {
     }
 }
 
-const addBorder = e => { if (!picked) e.target.style.border = "3px solid cyan"; }
+const addBorder = e => { if (!picked) e.target.style.boxShadow = "0 0 0 3px yellow"; }
 
-const deleteBorder = e => { if (!picked) e.target.style.border = "none"; }
+const deleteBorder = e => { if (!picked) e.target.style.boxShadow = "none"; }
 
-const pickOption = (e) => {
+const pickOption = e => {
     picked = true;
-    e.target.style.border = "3px solid cyan";
-    switch (e.target) {
-        case options[0]:
-            option = "papier";
-            options[1].style.border = "none";
-            options[2].style.border = "none";
-            break;
-        case options[1]:
-            option = "kamień";
-            options[0].style.border = "none";
-            options[2].style.border = "none";
-            break;
-        case options[2]:
-            option = "nożyce";
-            options[0].style.border = "none";
-            options[1].style.border = "none";
-            break;
-    }
+    options.forEach(option => option.style.boxShadow = "none");
+    e.target.style.boxShadow = "0 0 0 3px yellow";
 }
 
 btn.addEventListener('click', play);
