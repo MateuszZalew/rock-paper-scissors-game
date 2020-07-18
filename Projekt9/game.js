@@ -1,8 +1,5 @@
-// Zobacz gotowy projekt: https://websamuraj.pl/examples/js/projekt7/
-const first = document.querySelector(".first");
-const second = document.querySelector(".second");
-const third = document.querySelector(".third");
 const btn = document.querySelector(".start");
+const options = document.querySelectorAll(".select img");
 let option = "";
 let picked = false;
 const gameSummary = {
@@ -69,34 +66,26 @@ const pickOption = (e) => {
     picked = true;
     e.target.style.border = "3px solid cyan";
     switch (e.target) {
-        case first:
+        case options[0]:
             option = "papier";
-            second.style.border = "none";
-            third.style.border = "none";
+            options[1].style.border = "none";
+            options[2].style.border = "none";
             break;
-        case second:
+        case options[1]:
             option = "kamień";
-            first.style.border = "none";
-            third.style.border = "none";
+            options[0].style.border = "none";
+            options[2].style.border = "none";
             break;
-        case third:
+        case options[2]:
             option = "nożyce";
-            first.style.border = "none";
-            second.style.border = "none";
+            options[0].style.border = "none";
+            options[1].style.border = "none";
             break;
     }
 }
 
 btn.addEventListener('click', play);
 
-first.addEventListener("mouseover", addBorder);
-second.addEventListener("mouseover", addBorder);
-third.addEventListener("mouseover", addBorder);
-
-first.addEventListener('click', pickOption);
-second.addEventListener('click', pickOption);
-third.addEventListener('click', pickOption);
-
-first.addEventListener('mouseleave', deleteBorder);
-second.addEventListener("mouseleave", deleteBorder);
-third.addEventListener("mouseleave", deleteBorder);
+options.forEach(option => option.addEventListener('click', pickOption));
+options.forEach(option => option.addEventListener('mouseover', addBorder));
+options.forEach(option => option.addEventListener('mouseleave', deleteBorder));
