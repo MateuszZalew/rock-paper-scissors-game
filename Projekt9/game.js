@@ -19,6 +19,9 @@ const play = () => {
     document.querySelectorAll("span")[1].textContent = aiOption;
     result = chooseWinner(option, aiOption);
     document.querySelectorAll("span")[2].textContent = result;
+    if(result == "gracz") document.querySelectorAll("span")[2].style.color = "green";
+    else if(result == "komputer") document.querySelectorAll("span")[2].style.color = "red";
+    else document.querySelectorAll("span")[2].style.color = "#555";
     switch (result) {
         case "gracz":
             document.querySelector(".panel-right").querySelectorAll("span")[1].textContent = ++wins;
