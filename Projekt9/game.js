@@ -1,5 +1,7 @@
 const btn = document.querySelector(".start");
 const options = document.querySelectorAll(".select img");
+const spans = document.querySelectorAll("span");
+const rightPanelSpans = document.querySelectorAll(".panel-right span");
 let option = "";
 let picked = false;
 const gameSummary = {
@@ -9,53 +11,50 @@ const gameSummary = {
     draws: 0,
 }
 
+const getRandomAnswer = () => {
+    const options = ["papier", "kamień", "nożyce"];
+    return options[Math.floor(Math.random() * 3)];
+}
+
+function endGame() {
+    if (option != "") document.querySelector(`[data-option="${option}"]`).style.boxShadow = "none";
+    option = "";
+}
 
 const play = () => {
-    let result = "";
-    const options = ["papier", "kamień", "nożyce"];
-    aiOption = options[Math.floor(Math.random() * 3)];
-    document.querySelectorAll("span")[0].textContent = option;
-    if (option) document.querySelectorAll("span")[1].textContent = aiOption;
-    result = chooseWinner(option, aiOption);
-    document.querySelectorAll("span")[2].textContent = result;
-    if (result == "gracz") document.querySelectorAll("span")[2].style.color = "green";
-    else if (result == "komputer") document.querySelectorAll("span")[2].style.color = "red";
-    else document.querySelectorAll("span")[2].style.color = "#444";
+    spans[0].textContent = option;
+    aiOption = getRandomAnswer();
+    if (option) spans[1].textContent = aiOption;
+    const result = chooseWinner(option, aiOption);
+    spans[2].textContent = result;
+    if (result == "gracz") spans[2].style.color = "green";
+    else if (result == "komputer") spans[2].style.color = "red";
+    else spans[2].style.color = "#444";
     switch (result) {
         case "gracz":
-            document.querySelector(".panel-right").querySelectorAll("span")[1].textContent = ++gameSummary.wins;
-            document.querySelector(".panel-right").querySelectorAll("span")[0].textContent = ++gameSummary.games;
+            rightPanelSpans[1].textContent = ++gameSummary.wins;
+            rightPanelSpans[0].textContent = ++gameSummary.games;
             break;
         case "komputer":
-            document.querySelector(".panel-right").querySelectorAll("span")[2].textContent = ++gameSummary.losses;
-            document.querySelector(".panel-right").querySelectorAll("span")[0].textContent = ++gameSummary.games;
+            rightPanelSpans[2].textContent = ++gameSummary.losses;
+            rightPanelSpans[0].textContent = ++gameSummary.games;
             break;
         case "remis":
-            document.querySelector(".panel-right").querySelectorAll("span")[3].textContent = ++gameSummary.draws;
-            document.querySelector(".panel-right").querySelectorAll("span")[0].textContent = ++gameSummary.games;
+            rightPanelSpans[3].textContent = ++gameSummary.draws;
+            rightPanelSpans[0].textContent = ++gameSummary.games;
             break;
         default:
             alert("Musisz wybrać jedną z opcji!");
+            spans[1].textContent = "";
     }
-
+    endGame();
 }
 
 const chooseWinner = (playerChoice, aiChoice) => {
-    if (playerChoice == "papier") {
-        if (aiChoice == "papier") return "remis";
-        else if (aiChoice == "kamień") return "gracz";
-        else return "komputer";
-    } else if (playerChoice == "kamień") {
-        if (aiChoice == "papier") return "komputer";
-        else if (aiChoice == "kamień") return "remis";
-        else return "gracz";
-    } else if (playerChoice == "nożyce") {
-        if (aiChoice == "papier") return "gracz";
-        else if (aiChoice == "kamień") return "komputer";
-        else return "remis";
-    } else {
-        return null;
-    }
+    if (playerChoice == aiChoice) return "remis";
+    else if ((playerChoice == "papier" && aiChoice == "kamień") || (playerChoice == "kamień" && aiChoice == "nożyce") || (playerChoice == "nożyce" && aiChoice == "papier")) return "gracz";
+    else if (playerChoice == "") return "";
+    else return "komputer";
 }
 
 const addBorder = e => { if (!picked) e.target.style.boxShadow = "0 0 0 3px yellow"; }
@@ -64,6 +63,7 @@ const deleteBorder = e => { if (!picked) e.target.style.boxShadow = "none"; }
 
 const pickOption = e => {
     picked = true;
+    option = e.target.dataset.option;
     options.forEach(option => option.style.boxShadow = "none");
     e.target.style.boxShadow = "0 0 0 3px yellow";
 }
