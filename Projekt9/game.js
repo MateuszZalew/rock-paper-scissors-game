@@ -12,7 +12,7 @@ const gameSummary = {
 }
 
 const getRandomAnswer = () => {
-    const options = ["papier", "kamień", "nożyce"];
+    const options = ["paper", "rock", "scissors"];
     return options[Math.floor(Math.random() * 3)];
 }
 
@@ -27,34 +27,34 @@ const play = () => {
     if (option) spans[1].textContent = aiOption;
     const result = chooseWinner(option, aiOption);
     spans[2].textContent = result;
-    if (result == "gracz") spans[2].style.color = "green";
-    else if (result == "komputer") spans[2].style.color = "red";
+    if (result == "player") spans[2].style.color = "green";
+    else if (result == "computer") spans[2].style.color = "red";
     else spans[2].style.color = "#444";
     switch (result) {
-        case "gracz":
+        case "player":
             rightPanelSpans[1].textContent = ++gameSummary.wins;
             rightPanelSpans[0].textContent = ++gameSummary.games;
             break;
-        case "komputer":
+        case "computer":
             rightPanelSpans[2].textContent = ++gameSummary.losses;
             rightPanelSpans[0].textContent = ++gameSummary.games;
             break;
-        case "remis":
+        case "draw":
             rightPanelSpans[3].textContent = ++gameSummary.draws;
             rightPanelSpans[0].textContent = ++gameSummary.games;
             break;
         default:
-            alert("Musisz wybrać jedną z opcji!");
+            alert("You must choose one of the options!");
             spans[1].textContent = "";
     }
     endGame();
 }
 
 const chooseWinner = (playerChoice, aiChoice) => {
-    if (playerChoice == aiChoice) return "remis";
-    else if ((playerChoice == "papier" && aiChoice == "kamień") || (playerChoice == "kamień" && aiChoice == "nożyce") || (playerChoice == "nożyce" && aiChoice == "papier")) return "gracz";
+    if (playerChoice == aiChoice) return "draw";
+    else if ((playerChoice == "paper" && aiChoice == "rock") || (playerChoice == "rock" && aiChoice == "scissors") || (playerChoice == "scissors" && aiChoice == "paper")) return "player";
     else if (playerChoice == "") return "";
-    else return "komputer";
+    else return "computer";
 }
 
 const addBorder = e => { if (!picked) e.target.style.boxShadow = "0 0 0 3px yellow"; }
