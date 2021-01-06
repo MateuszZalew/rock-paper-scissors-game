@@ -5,12 +5,16 @@
     font-family: roboto, sans-serif;
 }
 
+body {
+    background-color: lightgoldenrodyellow;
+}
+
 h1 {
     text-align: center;
     margin: 20px 0;
 }
 
-h3 {
+h2 {
     margin: 30px 0;
 }
 
@@ -28,7 +32,7 @@ h3 {
 }
 
 .panel-left p {
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .panel h3 {
@@ -78,4 +82,11 @@ button:hover {
 
 span {
     font-weight: bold;
+}
+
+.numbers,
+.wins,
+.losses,
+.draws {
+    font-size: 22px;
 }
